@@ -1,0 +1,18 @@
+# Arquivos compilados Java
+*.class
+
+# Arquivos ZIP
+*.zip
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDE
+.idea/
+.vscode/
+*.iml
+
+# Arquivos de build
+target/
+build/
