@@ -1,88 +1,101 @@
 package com.fiap.voltz;
 
 /**
- * Classe que representa uma transação bancária
- * Registra operações de depósito, saque e transferência
+ * Classe que representa uma Transação no sistema financeiro
+ * Baseada no diagrama de entidade-relacionamento fornecido
  */
 public class Transacao {
-    private String idTransacao;
-    private String tipoTransacao;
-    private double valor;
+    private int idTransacao;
+    private int oidAprovacao; // FK para Aprovação (1:1)
+    private int oidCripto; // FK para Criptoativo
+    private int oidConta; // FK para Conta
     private String dataTransacao;
-    private String numeroContaOrigem;
-    private String numeroContaDestino;
-    private String status;
+    private double valorTransacao;
+    private String tipoTransacao;
     
-    // Construtor para depósito e saque
-    public Transacao(String idTransacao, String tipoTransacao, double valor, 
-                    String dataTransacao, String numeroContaOrigem) {
+    // Construtor
+    public Transacao(int idTransacao, int oidAprovacao, int oidCripto, int oidConta, 
+                    String dataTransacao, double valorTransacao, String tipoTransacao) {
         this.idTransacao = idTransacao;
-        this.tipoTransacao = tipoTransacao;
-        this.valor = valor;
+        this.oidAprovacao = oidAprovacao;
+        this.oidCripto = oidCripto;
+        this.oidConta = oidConta;
         this.dataTransacao = dataTransacao;
-        this.numeroContaOrigem = numeroContaOrigem;
-        this.status = "Pendente";
-    }
-    
-    // Construtor para transferência
-    public Transacao(String idTransacao, String tipoTransacao, double valor, 
-                    String dataTransacao, String numeroContaOrigem, String numeroContaDestino) {
-        this.idTransacao = idTransacao;
+        this.valorTransacao = valorTransacao;
         this.tipoTransacao = tipoTransacao;
-        this.valor = valor;
-        this.dataTransacao = dataTransacao;
-        this.numeroContaOrigem = numeroContaOrigem;
-        this.numeroContaDestino = numeroContaDestino;
-        this.status = "Pendente";
     }
     
     // Métodos específicos
     public void processarTransacao() {
-        this.status = "Processada";
-        System.out.println("Transação " + this.idTransacao + " processada com sucesso!");
+        System.out.println("=== PROCESSANDO TRANSAÇÃO ===");
+        System.out.println("ID: " + this.idTransacao);
+        System.out.println("Tipo: " + this.tipoTransacao);
+        System.out.println("Valor: R$ " + this.valorTransacao);
+        System.out.println("Data: " + this.dataTransacao);
+        System.out.println("Conta ID: " + this.oidConta);
+        System.out.println("Criptoativo ID: " + this.oidCripto);
+        System.out.println("Aprovação ID: " + this.oidAprovacao);
+        System.out.println("Transação processada com sucesso!");
     }
     
     public void cancelarTransacao() {
-        this.status = "Cancelada";
-        System.out.println("Transação " + this.idTransacao + " cancelada!");
+        System.out.println("Transação ID " + this.idTransacao + " foi CANCELADA!");
     }
     
     public void exibirDetalhes() {
         System.out.println("=== DETALHES DA TRANSAÇÃO ===");
         System.out.println("ID: " + this.idTransacao);
         System.out.println("Tipo: " + this.tipoTransacao);
-        System.out.println("Valor: R$ " + this.valor);
+        System.out.println("Valor: R$ " + this.valorTransacao);
         System.out.println("Data: " + this.dataTransacao);
-        System.out.println("Conta Origem: " + this.numeroContaOrigem);
-        if (this.numeroContaDestino != null) {
-            System.out.println("Conta Destino: " + this.numeroContaDestino);
-        }
-        System.out.println("Status: " + this.status);
+        System.out.println("Conta ID: " + this.oidConta);
+        System.out.println("Criptoativo ID: " + this.oidCripto);
+        System.out.println("Aprovação ID: " + this.oidAprovacao);
+    }
+    
+    public boolean isCompra() {
+        return "Compra".equals(this.tipoTransacao);
+    }
+    
+    public boolean isVenda() {
+        return "Venda".equals(this.tipoTransacao);
+    }
+    
+    public boolean isTransferencia() {
+        return "Transferência".equals(this.tipoTransacao);
     }
     
     // Getters e Setters
-    public String getIdTransacao() {
+    public int getIdTransacao() {
         return idTransacao;
     }
     
-    public void setIdTransacao(String idTransacao) {
+    public void setIdTransacao(int idTransacao) {
         this.idTransacao = idTransacao;
     }
     
-    public String getTipoTransacao() {
-        return tipoTransacao;
+    public int getOidAprovacao() {
+        return oidAprovacao;
     }
     
-    public void setTipoTransacao(String tipoTransacao) {
-        this.tipoTransacao = tipoTransacao;
+    public void setOidAprovacao(int oidAprovacao) {
+        this.oidAprovacao = oidAprovacao;
     }
     
-    public double getValor() {
-        return valor;
+    public int getOidCripto() {
+        return oidCripto;
     }
     
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setOidCripto(int oidCripto) {
+        this.oidCripto = oidCripto;
+    }
+    
+    public int getOidConta() {
+        return oidConta;
+    }
+    
+    public void setOidConta(int oidConta) {
+        this.oidConta = oidConta;
     }
     
     public String getDataTransacao() {
@@ -93,40 +106,32 @@ public class Transacao {
         this.dataTransacao = dataTransacao;
     }
     
-    public String getNumeroContaOrigem() {
-        return numeroContaOrigem;
+    public double getValorTransacao() {
+        return valorTransacao;
     }
     
-    public void setNumeroContaOrigem(String numeroContaOrigem) {
-        this.numeroContaOrigem = numeroContaOrigem;
+    public void setValorTransacao(double valorTransacao) {
+        this.valorTransacao = valorTransacao;
     }
     
-    public String getNumeroContaDestino() {
-        return numeroContaDestino;
+    public String getTipoTransacao() {
+        return tipoTransacao;
     }
     
-    public void setNumeroContaDestino(String numeroContaDestino) {
-        this.numeroContaDestino = numeroContaDestino;
-    }
-    
-    public String getStatus() {
-        return status;
-    }
-    
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTipoTransacao(String tipoTransacao) {
+        this.tipoTransacao = tipoTransacao;
     }
     
     @Override
     public String toString() {
         return "Transacao{" +
-                "idTransacao='" + idTransacao + '\'' +
-                ", tipoTransacao='" + tipoTransacao + '\'' +
-                ", valor=" + valor +
+                "idTransacao=" + idTransacao +
+                ", oidAprovacao=" + oidAprovacao +
+                ", oidCripto=" + oidCripto +
+                ", oidConta=" + oidConta +
                 ", dataTransacao='" + dataTransacao + '\'' +
-                ", numeroContaOrigem='" + numeroContaOrigem + '\'' +
-                ", numeroContaDestino='" + numeroContaDestino + '\'' +
-                ", status='" + status + '\'' +
+                ", valorTransacao=" + valorTransacao +
+                ", tipoTransacao='" + tipoTransacao + '\'' +
                 '}';
     }
 }

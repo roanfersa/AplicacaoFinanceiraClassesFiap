@@ -2,50 +2,78 @@ package com.fiap.voltz;
 
 /**
  * Classe base para todas as contas do sistema financeiro
- * Representa uma conta bancária genérica
+ * Baseada no diagrama de entidade-relacionamento fornecido
  */
 public abstract class Conta {
-    protected String numeroConta;
-    protected String titular;
-    protected double saldo;
+    protected int idConta;
+    protected int oidEmpresa; // FK para Empresa
+    protected int oidUsuario; // FK para Usuario
     protected String tipoConta;
+    protected String statusAtual;
+    protected String apelidoConta;
+    protected String nomeConta;
     
     // Construtor
-    public Conta(String numeroConta, String titular, double saldo, String tipoConta) {
-        this.numeroConta = numeroConta;
-        this.titular = titular;
-        this.saldo = saldo;
+    public Conta(int idConta, int oidEmpresa, int oidUsuario, String tipoConta, 
+                String statusAtual, String apelidoConta, String nomeConta) {
+        this.idConta = idConta;
+        this.oidEmpresa = oidEmpresa;
+        this.oidUsuario = oidUsuario;
         this.tipoConta = tipoConta;
+        this.statusAtual = statusAtual;
+        this.apelidoConta = apelidoConta;
+        this.nomeConta = nomeConta;
     }
     
     // Métodos abstratos
-    public abstract void depositar(double valor);
-    public abstract void sacar(double valor);
+    public abstract void realizarOperacao(double valor);
     public abstract void calcularRendimento();
     
+    // Métodos específicos
+    public void ativarConta() {
+        this.statusAtual = "Ativa";
+        System.out.println("Conta " + this.apelidoConta + " foi ATIVADA!");
+    }
+    
+    public void desativarConta() {
+        this.statusAtual = "Inativa";
+        System.out.println("Conta " + this.apelidoConta + " foi DESATIVADA!");
+    }
+    
+    public void exibirDados() {
+        System.out.println("=== DADOS DA CONTA ===");
+        System.out.println("ID: " + this.idConta);
+        System.out.println("Nome: " + this.nomeConta);
+        System.out.println("Apelido: " + this.apelidoConta);
+        System.out.println("Tipo: " + this.tipoConta);
+        System.out.println("Status: " + this.statusAtual);
+        System.out.println("ID Empresa: " + this.oidEmpresa);
+        System.out.println("ID Usuário: " + this.oidUsuario);
+    }
+    
     // Getters e Setters
-    public String getNumeroConta() {
-        return numeroConta;
+    public int getIdConta() {
+        return idConta;
     }
     
-    public void setNumeroConta(String numeroConta) {
-        this.numeroConta = numeroConta;
+    public void setIdConta(int idConta) {
+        this.idConta = idConta;
     }
     
-    public String getTitular() {
-        return titular;
+    public int getOidEmpresa() {
+        return oidEmpresa;
     }
     
-    public void setTitular(String titular) {
-        this.titular = titular;
+    public void setOidEmpresa(int oidEmpresa) {
+        this.oidEmpresa = oidEmpresa;
     }
     
-    public double getSaldo() {
-        return saldo;
+    public int getOidUsuario() {
+        return oidUsuario;
     }
     
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setOidUsuario(int oidUsuario) {
+        this.oidUsuario = oidUsuario;
     }
     
     public String getTipoConta() {
@@ -56,13 +84,40 @@ public abstract class Conta {
         this.tipoConta = tipoConta;
     }
     
+    public String getStatusAtual() {
+        return statusAtual;
+    }
+    
+    public void setStatusAtual(String statusAtual) {
+        this.statusAtual = statusAtual;
+    }
+    
+    public String getApelidoConta() {
+        return apelidoConta;
+    }
+    
+    public void setApelidoConta(String apelidoConta) {
+        this.apelidoConta = apelidoConta;
+    }
+    
+    public String getNomeConta() {
+        return nomeConta;
+    }
+    
+    public void setNomeConta(String nomeConta) {
+        this.nomeConta = nomeConta;
+    }
+    
     @Override
     public String toString() {
         return "Conta{" +
-                "numeroConta='" + numeroConta + '\'' +
-                ", titular='" + titular + '\'' +
-                ", saldo=" + saldo +
+                "idConta=" + idConta +
+                ", oidEmpresa=" + oidEmpresa +
+                ", oidUsuario=" + oidUsuario +
                 ", tipoConta='" + tipoConta + '\'' +
+                ", statusAtual='" + statusAtual + '\'' +
+                ", apelidoConta='" + apelidoConta + '\'' +
+                ", nomeConta='" + nomeConta + '\'' +
                 '}';
     }
 }

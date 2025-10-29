@@ -9,34 +9,17 @@ public class ContaCorrente extends Conta {
     private double taxaManutencao;
     
     // Construtor
-    public ContaCorrente(String numeroConta, String titular, double saldo, 
+    public ContaCorrente(int idConta, int oidEmpresa, int oidUsuario, String tipoConta, 
+                        String statusAtual, String apelidoConta, String nomeConta,
                         double limiteCredito, double taxaManutencao) {
-        super(numeroConta, titular, saldo, "Conta Corrente");
+        super(idConta, oidEmpresa, oidUsuario, tipoConta, statusAtual, apelidoConta, nomeConta);
         this.limiteCredito = limiteCredito;
         this.taxaManutencao = taxaManutencao;
     }
     
     @Override
-    public void depositar(double valor) {
-        if (valor > 0) {
-            this.saldo += valor;
-            System.out.println("Depósito de R$ " + valor + " realizado com sucesso!");
-            System.out.println("Novo saldo: R$ " + this.saldo);
-        } else {
-            System.out.println("Valor inválido para depósito!");
-        }
-    }
-    
-    @Override
-    public void sacar(double valor) {
-        double saldoDisponivel = this.saldo + this.limiteCredito;
-        if (valor > 0 && valor <= saldoDisponivel) {
-            this.saldo -= valor;
-            System.out.println("Saque de R$ " + valor + " realizado com sucesso!");
-            System.out.println("Novo saldo: R$ " + this.saldo);
-        } else {
-            System.out.println("Saldo insuficiente ou valor inválido!");
-        }
+    public void realizarOperacao(double valor) {
+        System.out.println("Operação de R$ " + valor + " realizada na conta corrente " + this.apelidoConta);
     }
     
     @Override
@@ -46,8 +29,11 @@ public class ContaCorrente extends Conta {
     }
     
     public void cobrarTaxaManutencao() {
-        this.saldo -= this.taxaManutencao;
-        System.out.println("Taxa de manutenção de R$ " + this.taxaManutencao + " cobrada.");
+        System.out.println("Taxa de manutenção de R$ " + this.taxaManutencao + " cobrada na conta " + this.apelidoConta);
+    }
+    
+    public void exibirLimiteCredito() {
+        System.out.println("Limite de crédito da conta " + this.apelidoConta + ": R$ " + this.limiteCredito);
     }
     
     // Getters e Setters específicos
@@ -70,9 +56,13 @@ public class ContaCorrente extends Conta {
     @Override
     public String toString() {
         return "ContaCorrente{" +
-                "numeroConta='" + numeroConta + '\'' +
-                ", titular='" + titular + '\'' +
-                ", saldo=" + saldo +
+                "idConta=" + idConta +
+                ", oidEmpresa=" + oidEmpresa +
+                ", oidUsuario=" + oidUsuario +
+                ", tipoConta='" + tipoConta + '\'' +
+                ", statusAtual='" + statusAtual + '\'' +
+                ", apelidoConta='" + apelidoConta + '\'' +
+                ", nomeConta='" + nomeConta + '\'' +
                 ", limiteCredito=" + limiteCredito +
                 ", taxaManutencao=" + taxaManutencao +
                 '}';
